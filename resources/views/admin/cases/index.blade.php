@@ -1,12 +1,12 @@
 <x-app-layout>
     <div class="px-4 py-6 sm:px-6 lg:px-8">
-        <div class="mb-6 rounded-3xl bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 px-6 py-6 shadow-xl text-white backdrop-blur-sm relative z-10">
+        <div class="mb-6 rounded-3xl bg-slate-50 px-6 py-6 shadow-xl relative z-10">
             <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
-                    <h1 class="text-3xl font-black">My Cases</h1>
-                    <p class="mt-2 max-w-2xl text-sm text-slate-100">Track case reports, email, challan status, and edit records directly from this page.</p>
+                    <h1 class="text-3xl font-black text-slate-950">My Cases</h1>
+                    <p class="mt-2 max-w-2xl text-sm text-slate-600">Track case reports, email, challan status, and edit records directly from this page.</p>
                 </div>
-                <button id="openCreate" class="inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-blue-800 to-blue-600 border-2 border-white/10 px-6 py-3 text-base font-semibold text-white shadow-2xl transition hover:opacity-95 focus:outline-none focus:ring-4 focus:ring-blue-500 z-20" type="button">
+                <button id="openCreate" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 rounded-full bg-white border-2 border-black px-8 py-3 sm:px-10 sm:py-4 text-lg font-bold text-black shadow-2xl transform transition duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-black/10 ring-offset-2 z-20" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
                     </svg>
@@ -117,6 +117,12 @@
             <form id="editForm" method="POST" class="mt-4 space-y-4">
                 @csrf
                 @method('PATCH')
+                <div class="-mt-3 mb-2">
+                    <button type="button" id="editBack" class="inline-flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0L4.586 11H17a1 1 0 110 2H4.586l3.707 3.707a1 1 0 01-1.414 1.414l-5.414-5.414a1 1 0 010-1.414l5.414-5.414a1 1 0 011.414 1.414L4.586 9H17a1 1 0 110 2H4.586l3.707 3.707z" clip-rule="evenodd"/></svg>
+                        Back
+                    </button>
+                </div>
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                         <label class="block text-sm font-medium text-slate-700">Prahari</label>
@@ -243,6 +249,8 @@
                 });
             });
             document.getElementById('editCancel').addEventListener('click', function(){ hideModal(editModal); });
+            const editBackBtn = document.getElementById('editBack');
+            if(editBackBtn){ editBackBtn.addEventListener('click', function(){ hideModal(editModal); }); }
 
             // AJAX submit for create
             const createForm = document.getElementById('createForm');
