@@ -1,40 +1,153 @@
-<x-guest-layout>
-    <div class="mb-6">
-        <h2 class="text-2xl font-bold text-slate-950">Reset Password</h2>
-        <p class="mt-1 text-sm text-slate-500">Set a new password for your admin account.</p>
-    </div>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reset Password - {{ config('app.name', 'Prahari') }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            overflow: auto;
+            padding: 2rem 0;
+        }
+        .glass-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+            text-align: center;
+        }
+        p.subtitle {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin: 0 0 2rem 0;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+        }
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: block;
+        }
+        .background-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: rgba(59, 130, 246, 0.3); }
+        .blob-2 { bottom: -20%; right: -10%; width: 600px; height: 600px; background: rgba(139, 92, 246, 0.2); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        ul { margin: 0.5rem 0 0 0; padding-left: 1.5rem; color: #ef4444; font-size: 0.875rem; }
+        .text-red-600 { color: #ef4444 !important; }
+    </style>
+</head>
+<body>
+    <div class="background-blob blob-1"></div>
+    <div class="background-blob blob-2"></div>
 
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
+    <div class="glass-container">
+        <h2>Reset Password</h2>
+        <p class="subtitle">Set a new password for your admin account.</p>
 
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+        <form method="POST" action="{{ route('password.store') }}">
+            @csrf
 
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+            <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <div class="form-group">
+                <label for="email">{{ __('Email') }}</label>
+                <input id="email" type="email" name="email" value="{{ old('email', $request->email) }}" required autofocus autocomplete="username" />
+                <x-input-error :messages="$errors->get('email')" class="error-message" />
+            </div>
 
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <div class="form-group">
+                <label for="password">{{ __('Password') }}</label>
+                <input id="password" type="password" name="password" required autocomplete="new-password" />
+                <x-input-error :messages="$errors->get('password')" class="error-message" />
+            </div>
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
+            <div class="form-group">
+                <label for="password_confirmation">{{ __('Confirm Password') }}</label>
+                <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <x-input-error :messages="$errors->get('password_confirmation')" class="error-message" />
+            </div>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="mt-6">
-            <button class="inline-flex w-full justify-center rounded-md bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800">
+            <button type="submit" class="btn-primary">
                 {{ __('Reset Password') }}
             </button>
-        </div>
-    </form>
-</x-guest-layout>
+        </form>
+    </div>
+</body>
+</html>
