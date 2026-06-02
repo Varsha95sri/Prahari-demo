@@ -79,6 +79,10 @@ php artisan config:cache || true
 php artisan route:cache || true
 php artisan view:cache || true
 
+echo "✅ Fixing permissions before starting apache..."
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache
+
 echo "✅ Prahari is ready. Starting Apache on port 80..."
 
 # Start Apache in foreground (this binds to port 80)
