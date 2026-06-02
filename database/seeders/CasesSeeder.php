@@ -25,7 +25,7 @@ class CasesSeeder extends Seeder
                 'type' => 'Traffic Violation',
                 'location' => 'Location ' . rand(1, 100),
                 'description' => 'Dummy case description for ' . $prahari->name,
-                'status' => 'pending',
+                'status' => 'open',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -36,7 +36,7 @@ class CasesSeeder extends Seeder
                 'type' => 'Illegal Parking',
                 'location' => 'Location ' . rand(101, 200),
                 'description' => 'Another dummy case for ' . $prahari->name,
-                'status' => 'resolved',
+                'status' => 'closed',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
