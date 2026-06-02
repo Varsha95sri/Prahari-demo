@@ -22,7 +22,7 @@ class WithdrawalSeeder extends Seeder
                 'amount' => rand(500, 2000),
                 'bank_account' => $prahari->bank_account ?? '1234567890',
                 'ifsc' => 'SBIN0001234',
-                'status' => 'completed',
+                'status' => 'approved',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
