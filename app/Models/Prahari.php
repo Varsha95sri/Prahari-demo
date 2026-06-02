@@ -17,6 +17,14 @@ class Prahari extends Model
         'password',
         'prahari_id',
         'aadhaar_number',
+        'bank_account',
+        'record_date',
+        'image_path',
+        'video_path',
+    ];
+
+    protected $casts = [
+        'record_date' => 'date',
     ];
 
     public function cases()

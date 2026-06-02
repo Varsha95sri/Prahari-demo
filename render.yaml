@@ -1,72 +1,51 @@
+databases:
+  - name: prahari-db
+    databaseName: prahari
+    user: prahari
+    plan: free
+    postgresMajorVersion: 15
+
 services:
-  # ── Laravel Web App ────────────────────────────────────────────────────────
   - type: web
     name: prahari-demo
     runtime: docker
     plan: free
     dockerfilePath: ./Dockerfile
     dockerContext: .
-
     envVars:
       - key: APP_NAME
         value: Prahari
-
       - key: APP_ENV
         value: production
-
       - key: APP_DEBUG
         value: "false"
-
       - key: APP_KEY
-        generateValue: true # Render auto-generates a secure random value
-
-      - key: APP_URL
-        fromService:
-          type: web
-          name: prahari-demo
-          property: host
-
-      # ── DB vars wired from the MySQL service below ──
+        generateValue: true
       - key: DB_CONNECTION
-        value: mysql
-
+        value: pgsql
       - key: DB_HOST
         fromDatabase:
-          name: prahari-mysql
+          name: prahari-db
           property: host
-
       - key: DB_PORT
         fromDatabase:
-          name: prahari-mysql
+          name: prahari-db
           property: port
-
       - key: DB_DATABASE
         fromDatabase:
-          name: prahari-mysql
+          name: prahari-db
           property: database
-
       - key: DB_USERNAME
         fromDatabase:
-          name: prahari-mysql
+          name: prahari-db
           property: user
-
       - key: DB_PASSWORD
         fromDatabase:
-          name: prahari-mysql
+          name: prahari-db
           property: password
-
       - key: SESSION_DRIVER
         value: file
-
-      - key: CACHE_DRIVER
+      - key: CACHE_STORE
         value: file
-
       - key: QUEUE_CONNECTION
         value: sync
-
-  # ── MySQL Database ─────────────────────────────────────────────────────────
-databases:
-  - name: prahari-mysql
-    plan: free
-    databaseName: prahari_db
-    user: prahari_user

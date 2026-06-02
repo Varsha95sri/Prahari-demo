@@ -10,14 +10,14 @@ class PrahariSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('praharis')->insert([
+        $praharis = [
 
             [
                 'name' => 'Rahul Singh',
                 'email' => 'rahul@example.com',
                 'phone' => '9876543210',
                 'aadhaar_number' => '123412341234',
-                'aadhaar_status' => 'verified',
+                'bank_account' => '1234567890',
                 'status' => 'active',
                 'password' => Hash::make('password123'),
                 'prahari_id' => 'PRH001',
@@ -30,7 +30,7 @@ class PrahariSeeder extends Seeder
                 'email' => 'aman@example.com',
                 'phone' => '9876543211',
                 'aadhaar_number' => '234523452345',
-                'aadhaar_status' => 'pending',
+                'bank_account' => '1234567891',
                 'status' => 'active',
                 'password' => Hash::make('password123'),
                 'prahari_id' => 'PRH002',
@@ -43,7 +43,7 @@ class PrahariSeeder extends Seeder
                 'email' => 'priya@example.com',
                 'phone' => '9876543212',
                 'aadhaar_number' => '345634563456',
-                'aadhaar_status' => 'verified',
+                'bank_account' => '1234567892',
                 'status' => 'inactive',
                 'password' => Hash::make('password123'),
                 'prahari_id' => 'PRH003',
@@ -56,7 +56,7 @@ class PrahariSeeder extends Seeder
                 'email' => 'neha@example.com',
                 'phone' => '9876543213',
                 'aadhaar_number' => '456745674567',
-                'aadhaar_status' => 'verified',
+                'bank_account' => '1234567893',
                 'status' => 'active',
                 'password' => Hash::make('password123'),
                 'prahari_id' => 'PRH004',
@@ -69,7 +69,7 @@ class PrahariSeeder extends Seeder
                 'email' => 'arjun@example.com',
                 'phone' => '9876543214',
                 'aadhaar_number' => '567856785678',
-                'aadhaar_status' => 'pending',
+                'bank_account' => '1234567894',
                 'status' => 'inactive',
                 'password' => Hash::make('password123'),
                 'prahari_id' => 'PRH005',
@@ -77,6 +77,13 @@ class PrahariSeeder extends Seeder
                 'updated_at' => now(),
             ],
 
-        ]);
+        ];
+
+        foreach ($praharis as $prahari) {
+            DB::table('praharis')->updateOrInsert(
+                ['email' => $prahari['email']],
+                $prahari
+            );
+        }
     }
 }

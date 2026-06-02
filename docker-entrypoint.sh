@@ -1,64 +1,52 @@
 #!/bin/bash
 set -e
 
-echo "🚀 Starting Prahari-demo deployment..."
+echo "🚀 Starting Prahari..."
 
 cd /var/www/html
 
-# Copy .env if not present
-if [ ! -f .env ]; then
-    cp .env.example .env
-fi
-
-# Inject environment variables from Render into .env
 cat > .env <<EOF
 APP_NAME="${APP_NAME:-Prahari}"
-APP_ENV=production
+APP_ENV=${APP_ENV:-production}
 APP_KEY=${APP_KEY}
-APP_DEBUG=false
-APP_URL=${APP_URL:-http://localhost}
+APP_DEBUG=${APP_DEBUG:-false}
+APP_URL=${APP_URL:-${RENDER_EXTERNAL_URL:-http://localhost}}
 
 LOG_CHANNEL=stack
 LOG_LEVEL=error
 
-DB_CONNECTION=mysql
+DB_CONNECTION=${DB_CONNECTION:-pgsql}
 DB_HOST=${DB_HOST}
-DB_PORT=${DB_PORT:-3306}
+DB_PORT=${DB_PORT:-5432}
 DB_DATABASE=${DB_DATABASE}
 DB_USERNAME=${DB_USERNAME}
 DB_PASSWORD=${DB_PASSWORD}
 
-CACHE_DRIVER=file
+CACHE_STORE=file
 SESSION_DRIVER=file
 QUEUE_CONNECTION=sync
 
-BROADCAST_DRIVER=log
+BROADCAST_CONNECTION=log
 FILESYSTEM_DISK=local
 EOF
 
-# Generate app key if not set
 if [ -z "$APP_KEY" ]; then
-    echo "⚙️  Generating APP_KEY..."
+    echo "⚙️ Generating APP_KEY..."
     php artisan key:generate --force
 fi
 
-echo "⏳ Waiting for MySQL to be ready..."
-until php artisan db:show --json > /dev/null 2>&1; do
-    echo "   MySQL not ready yet, retrying in 3s..."
-    sleep 3
-done
+echo "⚡ Clearing cache..."
+php artisan config:clear || true
+php artisan cache:clear || true
 
-echo "✅ MySQL connected!"
+echo "🔄 Running migrations..."
+php artisan migrate --force || true
 
-# Run migrations
-echo "🗄️  Running migrations..."
-php artisan migrate --force
+echo "⚡ Optimizing Laravel..."
+php artisan config:cache || true
+php artisan route:cache || true
+php artisan view:cache || true
 
-# Clear & cache config for production
-echo "🔧 Optimising Laravel..."
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+echo "✅ Prahari is ready."
 
-echo "✅ All done! Starting Apache..."
 exec "$@"

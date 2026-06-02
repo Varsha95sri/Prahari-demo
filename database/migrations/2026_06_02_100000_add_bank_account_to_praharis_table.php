@@ -1,25 +1,25 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        if (! Schema::hasColumn('praharis', 'aadhaar_number')) {
+        if (! Schema::hasColumn('praharis', 'bank_account')) {
             Schema::table('praharis', function (Blueprint $table) {
-                $table->string('aadhaar_number')->nullable();
+                $table->string('bank_account')->nullable();
             });
         }
     }
 
     public function down(): void
     {
-        if (Schema::hasColumn('praharis', 'aadhaar_number')) {
+        if (Schema::hasColumn('praharis', 'bank_account')) {
             Schema::table('praharis', function (Blueprint $table) {
-                $table->dropColumn('aadhaar_number');
+                $table->dropColumn('bank_account');
             });
         }
     }

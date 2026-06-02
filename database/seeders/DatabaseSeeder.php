@@ -13,10 +13,24 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        User::create([
-            'name' => 'Super Admin',
-            'email' => 'admin@prahari.com',
-            'password' => Hash::make('admin123'),
+        // Create admin user
+        User::updateOrCreate(
+            ['email' => 'admin@prahari.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => Hash::make('admin123'),
+            ]
+        );
+
+        // Seed Prahari data
+        $this->call([
+            PrahariSeeder::class,
+            CasesSeeder::class,
+            ChallanSeeder::class,
+            WalletSeeder::class,
+            TransactionSeeder::class,
+            WithdrawalSeeder::class,
         ]);
     }
 }
+

@@ -12,6 +12,21 @@
                 </div>
             </div>
             <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                @if($case->document_url)
+                    <div class="mb-6 rounded-md border border-slate-200 bg-slate-50 p-4">
+                        <p class="mb-3 text-sm font-semibold text-slate-600">Uploaded Case Media</p>
+                        @if($case->document_is_image)
+                            <img src="{{ $case->document_url }}" alt="Case media" class="max-h-96 w-full rounded-md object-contain">
+                        @elseif($case->document_is_video)
+                            <video controls class="max-h-96 w-full rounded-md bg-black">
+                                <source src="{{ $case->document_url }}">
+                            </video>
+                        @else
+                            <a href="{{ $case->document_url }}" target="_blank" class="inline-flex rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white">Open Document</a>
+                        @endif
+                    </div>
+                @endif
+
                 <dl class="grid grid-cols-1 gap-5 sm:grid-cols-3">
                     <div><dt class="text-sm text-slate-500">Prahari</dt><dd class="mt-1 font-semibold text-slate-950">{{ $case->prahari?->name ?? 'Unassigned' }}</dd></div>
                     <div><dt class="text-sm text-slate-500">Email</dt><dd class="mt-1 font-semibold text-slate-950">{{ $case->prahari?->email ?? '-' }}</dd></div>
