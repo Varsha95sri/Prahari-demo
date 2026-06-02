@@ -23,7 +23,7 @@ class ChallanSeeder extends Seeder
                 'case_id' => $case->id,
                 'prahari_id' => $case->prahari_id,
                 'amount' => rand(500, 2000),
-                'status' => rand(0, 1) ? 'paid' : 'unpaid',
+                'status' => rand(0, 1) ? 'paid' : 'pending',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
