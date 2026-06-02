@@ -8,20 +8,20 @@ cd /var/www/html
 # Write .env from environment variables
 cat > .env <<EOF
 APP_NAME="${APP_NAME:-Prahari}"
-APP_ENV=${APP_ENV:-production}
-APP_KEY=${APP_KEY}
-APP_DEBUG=${APP_DEBUG:-false}
-APP_URL=${APP_URL:-${RENDER_EXTERNAL_URL:-http://localhost}}
+APP_ENV="${APP_ENV:-production}"
+APP_KEY="${APP_KEY}"
+APP_DEBUG="true"
+APP_URL="${APP_URL:-${RENDER_EXTERNAL_URL:-http://localhost}}"
 
-LOG_CHANNEL=stack
-LOG_LEVEL=error
+LOG_CHANNEL="stderr"
+LOG_LEVEL="error"
 
-DB_CONNECTION=${DB_CONNECTION:-pgsql}
-DB_HOST=${DB_HOST}
-DB_PORT=${DB_PORT:-5432}
-DB_DATABASE=${DB_DATABASE}
-DB_USERNAME=${DB_USERNAME}
-DB_PASSWORD=${DB_PASSWORD}
+DB_CONNECTION="${DB_CONNECTION:-pgsql}"
+DB_HOST="${DB_HOST}"
+DB_PORT="${DB_PORT:-5432}"
+DB_DATABASE="${DB_DATABASE}"
+DB_USERNAME="${DB_USERNAME}"
+DB_PASSWORD="${DB_PASSWORD}"
 
 CACHE_STORE=file
 SESSION_DRIVER=file
