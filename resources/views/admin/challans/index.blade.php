@@ -95,8 +95,4 @@
             });
         })();
     </script>
-            </div>
-            <div class="border-t border-slate-200 px-5 py-4">{{ $challans->links() }}</div>
-        </div>
-    </div>
 </x-app-layout>

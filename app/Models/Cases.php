@@ -38,11 +38,25 @@ class Cases extends Model
 
     public function getDocumentIsImageAttribute(): bool
     {
-        return $this->document && Str::startsWith(Storage::disk('public')->mimeType($this->document) ?? '', 'image/');
+        if (!$this->document || !Storage::disk('public')->exists($this->document)) {
+            return false;
+        }
+        try {
+            return Str::startsWith(Storage::disk('public')->mimeType($this->document) ?? '', 'image/');
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function getDocumentIsVideoAttribute(): bool
     {
-        return $this->document && Str::startsWith(Storage::disk('public')->mimeType($this->document) ?? '', 'video/');
+        if (!$this->document || !Storage::disk('public')->exists($this->document)) {
+            return false;
+        }
+        try {
+            return Str::startsWith(Storage::disk('public')->mimeType($this->document) ?? '', 'video/');
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
